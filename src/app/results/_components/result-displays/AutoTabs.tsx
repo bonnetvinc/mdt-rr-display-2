@@ -2,15 +2,17 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import type { ParticipantResult } from '~/server/import/import-results';
 import TeamResults from './TeamResults';
 
 interface AutoTabsProps {
   categories: string[];
   timerDelayDefault: number;
   pageSize: number;
+  participantResults: ParticipantResult[]; // facultatif, pour tests
 }
 
-export default function AutoTabs({ categories, timerDelayDefault, pageSize }: AutoTabsProps) {
+export default function AutoTabs({ categories, timerDelayDefault, pageSize, participantResults }: AutoTabsProps) {
   const initialTab = categories?.[0] ?? '';
   const [activeTab, setActiveTab] = useState<string>(initialTab);
   const [page, setPage] = useState(0);
@@ -26,15 +28,7 @@ export default function AutoTabs({ categories, timerDelayDefault, pageSize }: Au
     setPage(0);
   }
 
-  // Requête pour l'onglet actif
-  // const { data, isLoading } = api.participantResults.getSortedParticipantsResults.useQuery(
-  //   { contest: activeTab },
-  //   { refetchInterval: timerDelay }
-  // );
-
-  const data = []; // Placeholder until API is restored
-  const isLoading = false; // Placeholder until API is restored
-
+  const data = participantResults.filter(pr => pr.Epreuve === activeTab);
   const totalResults = data?.length ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalResults / pageSize));
 
@@ -59,7 +53,6 @@ export default function AutoTabs({ categories, timerDelayDefault, pageSize }: Au
     };
   }, [activeTab, page, totalPages, timerDelay, categories]);
 
-  // Slice pour la page actuelle
   const paginatedData = data?.slice(page * pageSize, (page + 1) * pageSize) ?? [];
 
   return (
@@ -78,7 +71,7 @@ export default function AutoTabs({ categories, timerDelayDefault, pageSize }: Au
         </TabsList>
 
         <TabsContent value={activeTab}>
-          <TeamResults data={paginatedData} isLoading={isLoading} />
+          <TeamResults data={paginatedData} isLoading={false} />
         </TabsContent>
       </Tabs>
     </div>

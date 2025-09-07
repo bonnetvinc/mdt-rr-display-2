@@ -1,4 +1,4 @@
-type ParticipantResult = {
+export type ParticipantResult = {
   Position: number;
   Dossard: number;
   Nom: string;
