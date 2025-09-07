@@ -16,7 +16,7 @@ type Segments = {
   RETURN: number;
 };
 
-function TeamResults({ data, isLoading }: TeamResultsProps) {
+function TeamResultsKm({ data, isLoading }: TeamResultsProps) {
   if (isLoading) {
     return <div className="text-center text-gray-500">Chargement des résultats...</div>;
   }
@@ -56,16 +56,14 @@ function TeamResults({ data, isLoading }: TeamResultsProps) {
   return (
     <div className="overflow-hidden rounded-lg bg-gray-900">
       {/* Table Header */}
-      <div className="hidden grid-cols-10 gap-2 bg-gradient-to-r from-green-700 via-orange-700 to-red-700 px-4 py-2 font-bold text-sm sm:grid">
+      <div className="hidden grid-cols-8 gap-2 bg-gradient-to-r from-green-700 via-orange-700 to-red-700 px-4 py-2 font-bold text-sm sm:grid">
         <div className="col-span-1 text-start">Position</div>
         <div className="col-span-2 text-start">Coureur</div>
         <div className="col-span-1 text-start">Plaque</div>
         <div className="col-span-1 text-start">Tours</div>
-        <div className="col-span-1 text-start">Slalom</div>
-        <div className="col-span-1 text-start">Expert</div>
-        <div className="col-span-1 text-start">Rock garden</div>
-        <div className="col-span-1 text-start">la 2</div>
-        <div className="col-span-1 text-start">pts</div>
+        <div className="col-span-1 text-start">Distance</div>
+        <div className="col-span-1 text-start">Dénivelé</div>
+        <div className="col-span-1 text-start">Pts</div>
       </div>
 
       {/* Results Rows */}
@@ -75,7 +73,7 @@ function TeamResults({ data, isLoading }: TeamResultsProps) {
         return (
           <div
             key={participant.Dossard}
-            className={`grid grid-cols-2 items-center gap-2 border-gray-800 border-b px-4 py-2 text-sm transition-colors hover:bg-gray-800 sm:grid-cols-10 ${isTopThree ? 'bg-gradient-to-r' : 'bg-gray-900'} 
+            className={`grid grid-cols-2 items-center gap-2 border-gray-800 border-b px-4 py-2 text-sm transition-colors hover:bg-gray-800 sm:grid-cols-8 ${isTopThree ? 'bg-gradient-to-r' : 'bg-gray-900'} 
                 ${participant.Position === 1 ? 'border-l-4 border-l-yellow-400 from-yellow-900/20 to-transparent' : ''} 
                 ${participant.Position === 2 ? 'border-l-4 border-l-gray-400 from-gray-700/20 to-transparent' : ''} 
                 ${participant.Position === 3 ? 'border-l-4 border-l-orange-400 from-orange-900/20 to-transparent' : ''}`}
@@ -99,29 +97,15 @@ function TeamResults({ data, isLoading }: TeamResultsProps) {
 
             <div className="col-span-1 text-start">
               <div className="flex items-center justify-start gap-1">
-                <FlagIcon className="h-3 w-3 text-red-400" />
-                <span className="font-bold text-red-400">{participant.SLALOM}</span>
+                <GaugeCircleIcon className="h-3 w-3 text-orange-400" />
+                <span className="font-bold text-orange-400">{calcStats(participant).distanceKm} km</span>
               </div>
             </div>
 
             <div className="col-span-1 text-start">
               <div className="flex items-center justify-start gap-1">
-                <FlagIcon className="h-3 w-3 text-red-400" />
-                <span className="font-bold text-red-400">{participant.EXPERT}</span>
-              </div>
-            </div>
-
-            <div className="col-span-1 text-start">
-              <div className="flex items-center justify-start gap-1">
-                <FlagIcon className="h-3 w-3 text-red-400" />
-                <span className="font-bold text-red-400">{participant.ROCK}</span>
-              </div>
-            </div>
-
-            <div className="col-span-1 text-start">
-              <div className="flex items-center justify-start gap-1">
-                <FlagIcon className="h-3 w-3 text-red-400" />
-                <span className="font-bold text-red-400">{participant.RETURN}</span>
+                <MountainSnowIcon className="h-3 w-3 text-green-400" />
+                <span className="font-bold text-green-400">{calcStats(participant).elevationM} m</span>
               </div>
             </div>
 
@@ -142,4 +126,4 @@ function TeamResults({ data, isLoading }: TeamResultsProps) {
   );
 }
 
-export default TeamResults;
+export default TeamResultsKm;

@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchResults, type ParticipantResult } from '~/server/import/import-results';
-import AutoTabs from './results/_components/result-displays/AutoTabs';
-import AutoTabsKm from './results/_components/result-displays/AutoTabsKm';
+import AutoTabsKm from '../results/_components/result-displays/AutoTabsKm';
 
 export default function FetchExamplePage() {
   const [participantCategories, setParticipantCategories] = useState<string[]>([]);

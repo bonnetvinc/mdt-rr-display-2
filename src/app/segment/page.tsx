@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchResults, type ParticipantResult } from '~/server/import/import-results';
-import AutoTabs from './results/_components/result-displays/AutoTabs';
-import AutoTabsKm from './results/_components/result-displays/AutoTabsKm';
+import AutoTabs from '../results/_components/result-displays/AutoTabs';
 
 export default function FetchExamplePage() {
   const [participantCategories, setParticipantCategories] = useState<string[]>([]);
@@ -31,7 +30,7 @@ export default function FetchExamplePage() {
 
   return (
     <div className="p-6">
-      <AutoTabsKm
+      <AutoTabs
         categories={participantCategories}
         timerDelayDefault={5000}
         pageSize={14}
